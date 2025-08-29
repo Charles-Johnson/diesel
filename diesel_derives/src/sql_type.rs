@@ -33,6 +33,7 @@ pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagno
             #mysql_tokens
             #pg_tokens
         },
+        item
     ))
 }
 

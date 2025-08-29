@@ -38,5 +38,6 @@ pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Di
                 const HAS_STATIC_QUERY_ID: bool = #(#has_static_query_id &&)* true;
             }
         },
+        item
     ))
 }

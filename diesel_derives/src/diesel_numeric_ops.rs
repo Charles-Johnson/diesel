@@ -75,5 +75,6 @@ pub fn derive(mut item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Di
                 }
             }
         },
+        item
     ))
 }

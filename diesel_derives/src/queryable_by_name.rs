@@ -55,6 +55,7 @@ pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagno
                 }
             }
         },
+        item
     ))
 }
 

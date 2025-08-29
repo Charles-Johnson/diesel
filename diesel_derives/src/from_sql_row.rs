@@ -51,5 +51,6 @@ pub fn derive(mut item: syn::DeriveInput) -> Result<TokenStream, Diagnostic> {
                 }
             }
         },
+        item
     ))
 }

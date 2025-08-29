@@ -112,6 +112,7 @@ pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagno
 
                 #(#tokens)*
             },
+            item
         ))
     } else {
         Ok(quote!())
