@@ -5,6 +5,7 @@ use meta::*;
 use util::*;
 
 pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagnostic> {
+    let dummy_mod = format!("_impl_as_expression_for_{}", item.ident,).to_lowercase();
     let flags =
         MetaItem::with_name(&item.attrs, "diesel").unwrap_or_else(|| MetaItem::empty("diesel"));
     let is_sized = !flags.has_flag("not_sized");
@@ -101,9 +102,17 @@ pub fn derive(item: syn::DeriveInput) -> Result<proc_macro2::TokenStream, Diagno
     });
 
     if any_sql_types {
-        Ok(quote! {
-            #(#tokens)*
-        })
+        Ok(wrap_in_dummy_mod(
+            Ident::new(&dummy_mod, Span::call_site()),
+            quote! {
+                use diesel::expression::AsExpression;
+                use diesel::expression::bound::Bound;
+                use diesel::sql_types::Nullable;
+                use diesel::serialize::{self, ToSql, Output};
+
+                #(#tokens)*
+            },
+        ))
     } else {
         Ok(quote!())
     }
